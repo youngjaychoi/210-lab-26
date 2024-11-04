@@ -28,18 +28,13 @@ void deleteMid(Container &container);
 void deleteMid(set<string> &s);
 
 int main() {
-    // cout << right << setw(9) << "Operation" << setw(10) << "Vector" << setw(10) << "List" << setw(10) << "Set" << endl;
-    // cout << right << setw(9) << "Read" << setw(10) << vectorTime << setw(10) << listTime << setw(10) << setTime << endl;
+    long long results[NUM_SIMULATIONS][NUM_OPERATIONS][DATA_STRUCTURES] = { 0 };
 
-    // cout << right << setw(9) << "Sort" << setw(10) << vectorTime << setw(10) << listTime << setw(10) << setTime << endl;
+    simulation(results);
+    calculate_average(results);
 
-    // cout << right << setw(9) << "Insert" << setw(10) << vectorTime << setw(10) << listTime << setw(10) << setTime << setw(10) << endl;
-
-    // cout << right << setw(9) << "Delete" << setw(10) << vectorTime << setw(10) << listTime << setw(10) << setTime << endl;
-
-    // return 0;
+    return 0;
 }
-
 
 void simulation(long long results[NUM_SIMULATIONS][NUM_OPERATIONS][DATA_STRUCTURES]) {
     for (int sim = 0; sim < NUM_SIMULATIONS; ++ sim) {
@@ -136,24 +131,33 @@ void calculate_average(long long results[NUM_SIMULATIONS][NUM_OPERATIONS][DATA_S
             }
         }
     }
+
+    for (int op = 0; op < NUM_OPERATIONS; ++op) {
+        for (int ds = 0; ds < DATA_STRUCTURES; ++ds) {
+            average[op][ds] /= NUM_SIMULATIONS;
+        }
+    }
     
-
-
-
-
-
-
-
-
-
-
-
+    cout << "Number of simulations: " << NUM_SIMULATIONS << endl;
+    cout << right << setw(9) << "Operation" << setw(10) << "Vector" << setw(10) << "List" << setw(10) << "Set" << endl;
+    for (int op = 0; op < NUM_OPERATIONS; ++op) {
+        switch (op) {
+        case READ:
+            cout << right << setw(9) << "Read";
+            break;
+        case SORT:
+            cout << right << setw(9) << "Sort";
+            break;
+        case INSERT:
+            cout << right << setw(9) << "Insert";
+            break;
+        case DELETE:
+            cout << right << setw(9) << "Delete";
+            break;
+        }
+        cout << right << setw(9) << average[op][0] << setw(10) << average[op][1] << setw(10) << average[op][2] << endl;
+    }
 }
-
-
-
-
-
 
 template <typename Container>
 void readData(Container &container) {
